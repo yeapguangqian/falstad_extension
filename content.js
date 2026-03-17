@@ -1,4 +1,11 @@
 // content.js
+
+// 1. Inject the bridge
+const script = document.createElement('script');
+script.src = chrome.runtime.getURL('inject.js');
+(document.head || document.documentElement).appendChild(script);
+
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "EXPORT_DATA") {
     // Collect all localStorage data
@@ -32,4 +39,19 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
       sendResponse({ status: "reset_complete" });
   }
+  
+      if (request.action === "GET_ALL_DATA") {
+        sendResponse({ data: { ...localStorage } });
+    }
+
+    if (request.action === "LOAD_AND_ACTIVATE") {
+        // A. Put the subcircuit into Falstad's memory
+        localStorage.setItem(`subcircuit:${request.name}`, request.data);
+        
+        // B. Tell the bridge to "pick up" the tool
+        window.postMessage({ type: "ACTIVATE_TOOL", name: request.name }, "*");
+        
+        sendResponse({ status: "success" });
+    }
+
 });
