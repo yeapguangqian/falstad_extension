@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { width: 200px; padding: 10px; font-family: sans-serif; }
+    button { width: 100%; margin-bottom: 5px; cursor: pointer; }
+    .danger { 
+      background-color: #ff4d4d; 
+      color: white; 
+      border: none; 
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .danger:hover { background-color: #cc0000; }
+  </style>
+</head>
+<body>
+  <h3>Falstad Tools</h3>
+  <button id="exportBtn">Export to JSON</button>
+  <hr>
+  <input type="file" id="importFile" style="display:none" accept=".json">
+  <button id="importBtn">Import from JSON</button>
+  <button id="resetBtn" class="danger">Reset to Defaults</button>
+  <script src="popup.js"></script>
+</body>
+</html>
